@@ -1,20 +1,34 @@
 package ru.al.bigbank.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name ="client")
 public class Client {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GenericGenerator(
+            name = "ID_GENERATOR",
+            strategy = "increment",
+            parameters = @org.hibernate.annotations.Parameter(name = "sequence_name", value = "MY_SEQUENCE")
+    )
+    @GeneratedValue(generator = "ID_GENERATOR")
     private long id;
     @Column(name="client_name")
     private String clientName;
     @Column(name="phone_numb")
     private String phoneNumb;
+
     @Column(name="balance")
     private BigDecimal balance;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Payment> payments;
+
 
     public String getClientName() {
         return clientName;
@@ -44,8 +58,17 @@ public class Client {
         this.id = id;
     }
 
+    public List<Payment> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(List<Payment> payments) {
+        this.payments = payments;
+    }
+
     public long getId() {
         return id;
+
 
     }
 }

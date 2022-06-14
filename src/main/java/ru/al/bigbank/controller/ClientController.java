@@ -3,21 +3,26 @@ package ru.al.bigbank.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import ru.al.bigbank.model.dto.ClientDTO;
+import ru.al.bigbank.model.dto.PaymentDTO;
 import ru.al.bigbank.model.entity.Client;
 import ru.al.bigbank.model.entity.Payment;
 import ru.al.bigbank.service.ClientService;
+import ru.al.bigbank.service.ClientServiceImp;
 import ru.al.bigbank.service.PaymentService;
 
 @Controller
 public class ClientController {
-    @Autowired
-    private ClientService clientService;
-    @Autowired
+
+    private ClientServiceImp clientService;
+
     private PaymentService paymentService;
+    @Autowired
+    public ClientController(ClientServiceImp clientService, PaymentService paymentService) {
+        this.clientService = clientService;
+        this.paymentService = paymentService;
+    }
 
     @GetMapping("/")
     public String viewHomePage(Model model){
@@ -31,7 +36,7 @@ public class ClientController {
         return "new_client";
     }
     @PostMapping("/saveClient")
-    public String saveClient(@ModelAttribute("client") Client client){
+    public String saveClient(@ModelAttribute("client") ClientDTO client){
         clientService.saveClient(client);
         return "redirect:/";
     }
@@ -48,14 +53,19 @@ public class ClientController {
     }
     @GetMapping("/showNewPaymentForm")
     public String showNewPaymentForm(Model model){
-        Payment payment = new Payment();
+        PaymentDTO payment = new PaymentDTO();
         model.addAttribute("payment", payment);
         return "new_payment";
     }
     @PostMapping("/savePayment")
-    public String savePayment(@ModelAttribute("payment") Payment payment){
+    public String savePayment(@ModelAttribute("payment") PaymentDTO payment){
         paymentService.savePayment(payment);
         return "redirect:/";
+    }
+    @GetMapping("/showTransaction/{id}")
+    public String showTransaction(@PathVariable(value = "id") long id, Model model){
+    model.addAttribute("listOfPayment", clientService.showTransactionByClient(id));
+        return "transaction_list";
     }
 
 }
