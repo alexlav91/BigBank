@@ -10,7 +10,7 @@ import java.util.List;
 
 public class PaymentDTO {
     private long id;
-    @NotEmpty()
+
     private String dateOfPayment;
     private Long sender;
     private Long recipient;
