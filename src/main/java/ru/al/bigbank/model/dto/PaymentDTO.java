@@ -1,12 +1,6 @@
 package ru.al.bigbank.model.dto;
 
-import ru.al.bigbank.model.entity.Client;
-
-import javax.persistence.Column;
-import javax.persistence.ManyToMany;
-import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
-import java.util.List;
 
 public class PaymentDTO {
     private long id;

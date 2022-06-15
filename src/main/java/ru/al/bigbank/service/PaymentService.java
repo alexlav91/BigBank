@@ -24,8 +24,8 @@ public class PaymentService {
         this.clientRepository = clientRepository;
     }
 
-    public void savePayment(PaymentDTO payment){
-        Payment payment1=new Payment();
+    public void savePayment(PaymentDTO payment) {
+        Payment payment1 = new Payment();
         payment1.setDateOfPayment(payment.getDateOfPayment());
         Client client = clientRepository.findById(payment.getSender()).orElseThrow();
         Client client2 = clientRepository.findById(payment.getRecipient()).orElseThrow();

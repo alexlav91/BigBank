@@ -1,6 +1,5 @@
 package ru.al.bigbank.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -8,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-@Table(name ="client")
+@Table(name = "client")
 public class Client {
     @Id
     @GenericGenerator(
@@ -18,12 +17,12 @@ public class Client {
     )
     @GeneratedValue(generator = "ID_GENERATOR")
     private long id;
-    @Column(name="client_name")
+    @Column(name = "client_name")
     private String clientName;
-    @Column(name="phone_numb")
+    @Column(name = "phone_numb")
     private String phoneNumb;
 
-    @Column(name="balance")
+    @Column(name = "balance")
     private BigDecimal balance;
 
     @ManyToMany(fetch = FetchType.EAGER)

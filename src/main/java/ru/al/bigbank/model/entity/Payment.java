@@ -5,24 +5,24 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-@Table(name ="payment")
+@Table(name = "payment")
 public class Payment {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name ="date_of_payment")
+    @Column(name = "date_of_payment")
     private String dateOfPayment;
     @ManyToMany(fetch = FetchType.EAGER)
-    @Column(name="sender")
-    private List <Client> sender;
+    @Column(name = "sender")
+    private List<Client> sender;
     @ManyToMany(fetch = FetchType.EAGER)
     @Column(name = "recipient")
-    private List <Client> recipient;
+    private List<Client> recipient;
 
-    @Column(name="transfer")
+    @Column(name = "transfer")
     private BigDecimal transfer;
-    @Column(name="message")
+    @Column(name = "message")
     private String message;
 
     public long getId() {

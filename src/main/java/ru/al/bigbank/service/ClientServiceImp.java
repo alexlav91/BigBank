@@ -1,5 +1,6 @@
 package ru.al.bigbank.service;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.al.bigbank.model.dto.ClientDTO;
@@ -11,9 +12,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ClientServiceImp implements ClientService{
-    @Autowired
+public class ClientServiceImp implements ClientService {
+
     private ClientRepository clientRepository;
+
+    @Autowired
+    public ClientServiceImp(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
+    }
 
     @Override
     public List<Client> getAllClients() {
@@ -22,23 +28,23 @@ public class ClientServiceImp implements ClientService{
 
     @Override
     public void saveClient(ClientDTO client) {
-      Client client1 = new Client();
-      client1.setId(client.getId());
-      client1.setClientName(client.getClientName());
-      client1.setBalance(client.getBalance());
-      client1.setPhoneNumb(client.getPhoneNumb());
-      this.clientRepository.save(client1);
+        Client client1 = new Client();
+        client1.setId(client.getId());
+        client1.setClientName(client.getClientName());
+        client1.setBalance(client.getBalance());
+        client1.setPhoneNumb(client.getPhoneNumb());
+        this.clientRepository.save(client1);
     }
 
     @Override
     public Client getClientById(long id) {
-        Optional<Client> optional=clientRepository.findById(id);
-        Client client=null;
-        if(optional.isPresent()){
-            client=optional.get();
-        }else {
-            throw new RuntimeException("Client not found for id: "+id);
-            }
+        Optional<Client> optional = clientRepository.findById(id);
+        Client client = null;
+        if (optional.isPresent()) {
+            client = optional.get();
+        } else {
+            throw new RuntimeException("Client not found for id: " + id);
+        }
         return client;
     }
 
